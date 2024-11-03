@@ -125,7 +125,7 @@ function resetShapes() {
   circleColorTwo = color(100, 100, 250); // Second circle color
 }
 
-// Reset on key press
+// reset
 function keyPressed() {
   resetShapes();
 }
