@@ -89,16 +89,16 @@ function resetShapes() {
   
   // direction of speed pink circle X
   if (random() > 0.5) {
-    circleSpeedX *= 1; // Positive direction
+    circleSpeedX *= 1; 
   } else {
-    circleSpeedX *= -1; // Negative direction
+    circleSpeedX *= -1; /
   }
 
   // direction of speed pink circle Y
   if (random() > 0.5) {
-    circleSpeedY *= 1; // Positive direction
+    circleSpeedY *= 1; 
   } else {
-    circleSpeedY *= -1; // Negative direction
+    circleSpeedY *= -1; 
   }
   
   circleXtwo = random(30, width - 30);
@@ -108,21 +108,21 @@ function resetShapes() {
 
   // direction of speed purple circle X
   if (random() > 0.5) {
-    circleSpeedXtwo *= 1; // Positive direction
+    circleSpeedXtwo *= 1; 
   } else {
-    circleSpeedXtwo *= -1; // Negative direction
+    circleSpeedXtwo *= -1; 
   }
 
   // direction of purple circle Y
   if (random() > 0.5) {
-    circleSpeedYtwo *= 1; // Positive direction
+    circleSpeedYtwo *= 1; 
   } else {
-    circleSpeedYtwo *= -1; // Negative direction
+    circleSpeedYtwo *= -1; 
   }
 
   // circle colors
-  circleColor = color(255, 50, 150);   // First circle color
-  circleColorTwo = color(100, 100, 250); // Second circle color
+  circleColor = color(255, 50, 150);   
+  circleColorTwo = color(100, 100, 250); 
 }
 
 // reset
