@@ -91,7 +91,7 @@ function resetShapes() {
   if (random() > 0.5) {
     circleSpeedX *= 1; 
   } else {
-    circleSpeedX *= -1; /
+    circleSpeedX *= -1; 
   }
 
   // direction of speed pink circle Y
