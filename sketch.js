@@ -1,131 +1,74 @@
-let circleX, circleY, circleSpeedX, circleSpeedY;
-let circleXtwo, circleYtwo, circleSpeedXtwo, circleSpeedYtwo;
-let circleColor, circleColorTwo;
+let circle1, circle2;
 
 function setup() {
   createCanvas(800, 600);
-  resetShapes();
+  circle1 = new Circle(random(25, width - 25), random(25, height - 25), color(255, 50, 150));
+  circle2 = new Circle(random(30, width - 30), random(30, height - 30), color(100, 100, 250));
 }
 
 function draw() {
   background(220);
   
-  // pink circle
-  fill(circleColor);
-  ellipse(circleX, circleY, 120);
-  circleX += circleSpeedX;
-  circleY += circleSpeedY;
+  circle1.update();
+  circle2.update();
   
-  // purple circle
-  fill(circleColorTwo);
-  ellipse(circleXtwo, circleYtwo, 120);
-  circleXtwo += circleSpeedXtwo;
-  circleYtwo += circleSpeedYtwo;
+  circle1.display();
+  circle2.display();
   
-  // collisions pink circle
-  if (circleX < 70 || circleX > width - 70) circleSpeedX *= -1;
-  if (circleY < 70 || circleY > height - 70) circleSpeedY *= -1;
-
-  // collisiens purple circle
-  if (circleXtwo < 70 || circleXtwo > width - 70) circleSpeedXtwo *= -1;
-  if (circleYtwo < 70 || circleYtwo > height - 70) circleSpeedYtwo *= -1;
-
-  // collisions betwen circle
-  if (dist(circleX, circleY, circleXtwo, circleYtwo) < 120) {
-    circleSpeedX *= -1;    
-    circleSpeedY *= -1;
-    circleSpeedXtwo *= -1; 
-    circleSpeedYtwo *= -1;
+  if (circle1.collidesWith(circle2)) {
+    circle1.bounce();
+    circle2.bounce();
   }
 }
 
-function resetShapes() {
-  circleX = random(25, width - 25);
-  circleY = random(25, height - 25);
-  circleSpeedX = random(2, 5);
-  circleSpeedY = random(2, 5);
-  
-  // direction pink circle X
-  if (random() > 0.5) {
-    circleSpeedX *= 1; 
-  } else {
-    circleSpeedX *= -1; 
-  }
-
-  // direction pink circle Y
-  if (random() > 0.5) {
-    circleSpeedY *= 1; 
-  } else {
-    circleSpeedY *= -1; 
-  }
-  
-  circleXtwo = random(30, width - 30);
-  circleYtwo = random(30, height - 30);
-  circleSpeedXtwo = random(2, 5);
-  circleSpeedYtwo = random(2, 5);
-
-  // direction purple circle x
-  if (random() > 0.5) {
-    circleSpeedXtwo *= 1; 
-  } else {
-    circleSpeedXtwo *= -1; 
-  }
-
-  // direction purple circle Y
-  if (random() > 0.5) {
-    circleSpeedYtwo *= 1; 
-  } else {
-    circleSpeedYtwo *= -1; 
-  }
-
-  // circle colors
-  circleColor = color(255, 50, 150);   // pink circle
-  circleColorTwo = color(100, 100, 250); // purple circle
-}function resetShapes() {
-  circleX = random(25, width - 25);
-  circleY = random(25, height - 25);
-  circleSpeedX = random(2, 5);
-  circleSpeedY = random(2, 5);
-  
-  // direction of speed pink circle X
-  if (random() > 0.5) {
-    circleSpeedX *= 1; 
-  } else {
-    circleSpeedX *= -1; 
-  }
-
-  // direction of speed pink circle Y
-  if (random() > 0.5) {
-    circleSpeedY *= 1; 
-  } else {
-    circleSpeedY *= -1; 
-  }
-  
-  circleXtwo = random(30, width - 30);
-  circleYtwo = random(30, height - 30);
-  circleSpeedXtwo = random(2, 5);
-  circleSpeedYtwo = random(2, 5);
-
-  // direction of speed purple circle X
-  if (random() > 0.5) {
-    circleSpeedXtwo *= 1; 
-  } else {
-    circleSpeedXtwo *= -1; 
-  }
-
-  // direction of purple circle Y
-  if (random() > 0.5) {
-    circleSpeedYtwo *= 1; 
-  } else {
-    circleSpeedYtwo *= -1; 
-  }
-
-  // circle colors
-  circleColor = color(255, 50, 150);   
-  circleColorTwo = color(100, 100, 250); 
-}
-
-// reset
 function keyPressed() {
-  resetShapes();
+  circle1.reset();
+  circle2.reset();
+}
+
+class Circle {
+  constructor(x, y, c) {
+    this.x = x;
+    this.y = y;
+    this.diameter = 120;
+    this.color = c;
+    this.speedX = random(2, 5) * (random() > 0.5 ? 1 : -1);
+    this.speedY = random(2, 5) * (random() > 0.5 ? 1 : -1);
+  }
+
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.checkBorders();
+  }
+
+  display() {
+    fill(this.color);
+    ellipse(this.x, this.y, this.diameter);
+  }
+
+  checkBorders() {
+    if (this.x < this.diameter / 2 || this.x > width - this.diameter / 2) {
+      this.speedX *= -1;
+    }
+    if (this.y < this.diameter / 2 || this.y > height - this.diameter / 2) {
+      this.speedY *= -1;
+    }
+  }
+
+  collidesWith(other) {
+    return dist(this.x, this.y, other.x, other.y) < this.diameter;
+  }
+
+  bounce() {
+    this.speedX *= -1;
+    this.speedY *= -1;
+  }
+
+  reset() {
+    this.x = random(diameter / 2, width - diameter / 2);
+    this.y = random(diameter / 2, height - diameter / 2);
+    this.speedX = random(2, 5) * (random() > 0.5 ? 1 : -1);
+    this.speedY = random(2, 5) * (random() > 0.5 ? 1 : -1);
+  }
 }
